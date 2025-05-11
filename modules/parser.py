@@ -1,9 +1,2 @@
-# modules/parser.py
-
-def load_contract(path):
-    with open(path, "r", encoding="utf-8") as f:
-        return f.read()
-
-def split_contract(text, sep="Cláusula"):
-    partes = text.split(sep)
-    return [f"{sep}{p.strip()}" for p in partes if p.strip()]
+def split_text(text, sep="."):
+    return [p.strip() + "." for p in text.split(sep) if p.strip()]

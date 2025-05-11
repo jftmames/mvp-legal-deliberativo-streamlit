@@ -1,37 +1,32 @@
 import streamlit as st
-from modules.parser import load_contract, split_contract
+import json
 from modules.reasoning import generate_questions, trace_reasoning
 from modules.evaluator import evaluate_deliberation
-import json
 
-st.set_page_config(page_title="MVP Legal Deliberativo", layout="wide")
+st.set_page_config(page_title="Deliberador PI", layout="wide")
 
-st.title("⚖️ MVP Legal Deliberativo")
-st.markdown("Explora, pregunta y evalúa contratos jurídicos mediante razonamiento deliberativo estructurado.")
+st.title("📚 Deliberador de Propiedad Intelectual")
+st.markdown("Explora casos reales, formula preguntas y evalúa razonamientos jurídicos sobre derechos de autor, uso indebido y licencias.")
 
-# Cargar contratos
-with open("data/contratos_demo.json", "r", encoding="utf-8") as f:
-    contratos = json.load(f)
+# Cargar casos
+with open("data/casos_pi.json", "r", encoding="utf-8") as f:
+    casos = json.load(f)
 
-contrato_titulos = list(contratos.keys())
-contrato_seleccionado = st.selectbox("📄 Selecciona un contrato", contrato_titulos)
+caso_titulos = list(casos.keys())
+caso_seleccionado = st.selectbox("🧠 Selecciona un caso", caso_titulos)
 
-if contrato_seleccionado:
-    texto = contratos[contrato_seleccionado]
-    clausulas = split_contract(texto)
+if caso_seleccionado:
+    texto = casos[caso_seleccionado]
+    st.markdown(f"### {caso_seleccionado}")
+    st.write(texto)
 
-    clausula_idx = st.slider("📑 Cláusula a explorar", 0, len(clausulas) - 1, 0)
-    st.markdown(f"**Cláusula {clausula_idx + 1}**")
-    st.code(clausulas[clausula_idx], language="markdown")
+    st.subheader("🔍 Formula una pregunta inicial")
+    pregunta_raiz = st.text_input("Pregunta deliberativa:", "")
 
-    st.divider()
-    st.subheader("🔍 Indagación deliberativa")
-
-    pregunta_raiz = st.text_input("Formula una pregunta sobre esta cláusula:", "")
     if pregunta_raiz:
-        subpreguntas = generate_questions(pregunta_raiz, clausulas[clausula_idx])
+        subpreguntas = generate_questions(pregunta_raiz, texto)
         st.markdown("#### 🧩 Subpreguntas generadas:")
-        for i, q in enumerate(subpreguntas):
+        for q in subpreguntas:
             st.markdown(f"- {q}")
 
         st.divider()

@@ -1,17 +1,15 @@
-import random
-
-def generate_questions(root_question, clause_text):
+def generate_questions(root_question, context_text):
     return [
-        f"¿Qué implicaciones tiene respecto a {root_question.lower()}?",
-        f"¿Qué excepciones podrían aplicarse a esta cláusula?",
-        f"¿Cómo se relaciona esta cláusula con principios generales del derecho?"
+        f"¿Qué derechos están implicados en relación con '{root_question}'?",
+        f"¿Qué excepciones legales podrían aplicarse?",
+        f"¿Existe jurisprudencia relevante sobre este tipo de caso?"
     ]
 
 def trace_reasoning(root, subqs):
     return {
         "pregunta_raíz": root,
         "trayectoria": [
-            {"subpregunta": q, "respuesta": "🧠 Respuesta hipotética a deliberar."}
+            {"subpregunta": q, "respuesta": "🧠 Respuesta simulada en análisis epistémico."}
             for q in subqs
         ]
     }
