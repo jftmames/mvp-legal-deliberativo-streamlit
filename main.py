@@ -42,4 +42,4 @@ if contrato_seleccionado:
         st.divider()
         st.subheader("📊 Evaluación epistémica")
         score = evaluate_deliberation(razonamiento)
-        st.metric(label="Índice de Equilibrio Erotético (EEE)", value=f"{sco
+        st.metric(label="Índice de Equilibrio Erotético (EEE)", value=f"{score:.2f}")
